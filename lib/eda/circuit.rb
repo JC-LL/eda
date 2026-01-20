@@ -1,12 +1,17 @@
 module EDA
 
+
+
   class Port
     include InfoDisplay
+    @@id=-1
     attr_accessor :name
     attr_accessor :component
     attr_accessor :source,:sinks
     attr_accessor :value
+    attr_accessor :id
     def initialize name
+      @id=(@@id+=1)
       @name=Var.new(name.to_s)
       @sinks=[]
       @source=nil
@@ -36,9 +41,10 @@ module EDA
     attr_accessor :inputs,:outputs,:components
     attr_accessor :delay
     attr_accessor :component
-
+    attr_accessor :id
     def initialize name=nil
       @name=name || "#{self.class}_#{@@id+=1}"
+      @id=(@@id+=1)
       @inputs,@outputs=[],[]
       @components=[]
     end

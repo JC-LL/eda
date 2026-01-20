@@ -38,11 +38,30 @@ module EDA
       analyzer.report_stats(circuit)
     end
 
-    def print_dot circuit
+    def gen_dot circuit
       info 0,"printing circuit #{circuit.name}"
       dot_name=CircuitPrinter.new.print_dot(circuit)
       info 1,"filename".ljust(DOTS,'.')+" "+dot_name
+    end
 
+    def gen_vhdl circuit
+      info 0,"VHDL generation : "
+      generator=VHDLGenerator.new
+      info 1,"generating Gtech library"
+      vhdl=generator.gen_gtech()
+      gtech_filename=vhdl.save_as("gtech.vhd")
+      info 2,"filename".ljust(DOTS,'.')+" "+gtech_filename
+
+      info 1,"generating VHDL for circuit #{circuit.name}"
+      vhdl=generator.gen_entity_arch(circuit)
+      filename=vhdl.save_as("#{circuit.name}.vhd")
+      info 2,"filename".ljust(DOTS,'.')+" "+filename
+    end
+
+    def static_analysis_min_max circuit
+      info 0,"STA static timing analysis (min,max)"
+      analyzer=MinMaxAnalyzer.new
+      analyzer.analyze circuit
     end
   end
 end

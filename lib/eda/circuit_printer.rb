@@ -32,6 +32,7 @@ module EDA
       sources.each do |source|
         source_comp_name=name_last(source.component,'::')
         source_name= source.component==circuit ? source.name : [source_comp_name,source.name].join(":")
+        source_name=
         source.sinks.each do |sink|
           sink_comp_name=name_last(sink.component,'::')
           sink_name  = (sink.component==circuit) ? sink.name : [sink_comp_name,sink.name].join(":")

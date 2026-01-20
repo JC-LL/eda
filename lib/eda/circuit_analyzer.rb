@@ -10,7 +10,6 @@ module EDA
       info 1,"average fanout".ljust(DOTS,'.')+" #{circuit.get_average_fanout.round(2)}"
       info 1,"max path (in gates count)".ljust(DOTS,'.')+" #{depth(circuit)}"
       #walk(circuit)
-
     end
 
     def depth circuit
