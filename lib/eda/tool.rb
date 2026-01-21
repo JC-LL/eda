@@ -51,24 +51,43 @@ module EDA
       info 1,"generating Gtech library"
       vhdl=generator.gen_gtech()
       gtech_filename=vhdl.save_as("gtech.vhd")
-      info 2,"filename".ljust(DOTS,'.')+" "+gtech_filename
+      info 2,ljust_dots("filename",gtech_filename)
 
       info 1,"generating VHDL for circuit #{circuit.name}"
       vhdl=generator.gen_entity_arch(circuit)
       filename=vhdl.save_as("#{circuit.name}.vhd")
-      info 2,"filename".ljust(DOTS,'.')+" "+filename
+      info 2,"filename".ljust(DOTS,'.')+filename
     end
 
     def static_analysis_min_max circuit
       info 0,"STA static timing analysis (min,max)"
-      analyzer=MinMaxAnalyzer.new
+      analyzer=MinMaxSTA.new
       analyzer.analyze circuit
     end
 
-    def insert_buffer_random circuit
+    def insert_buffer_random circuit,delay=1
       info 0,"insert buffer random"
       inserter=BufferInserter.new
-      inserter.random_insert(circuit)
+      buffer=inserter.random_insert(circuit,delay)
+      return buffer
     end
+
+    def write_sxp circuit
+      info 0,"saving '#{circuit.name}'"
+      writer=CircuitSxpWriter.new
+      sxp=writer.write(circuit)
+      filename=circuit.name+".sxp"
+      sxp.save_as filename
+      info 1,ljust_dots("saving",filename)
+      filename
+    end
+
+    def read_sxp sxp_filename
+      info 0,"reading file '#{sxp_filename}'"
+      code=IO.read(sxp_filename)
+      parser=CircuitSxpParser.new
+      circuit=parser.parse(code)
+    end
+
   end
 end

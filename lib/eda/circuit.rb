@@ -105,16 +105,16 @@ module EDA
   end
 
   class Gate1 < Circuit
-    def initialize
-      super
+    def initialize iname=nil
+      super(iname)
       self << Input.new(:i)
       self << Output.new(:f)
     end
   end
 
   class Gate2 < Circuit
-    def initialize
-      super
+    def initialize iname=nil
+      super(iname)
       self << Input.new(:i0)
       self << Input.new(:i1)
       self << Output.new(:f)
@@ -122,8 +122,8 @@ module EDA
   end
 
   class Dff < Circuit
-    def initialize
-      super
+    def initialize iname=nil
+      super(iname)
       self << Input.new(:d)
       self << Output.new(:q)
     end

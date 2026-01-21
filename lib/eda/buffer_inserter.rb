@@ -16,6 +16,7 @@ module EDA
       target_source.sinks.delete(target_sink)
       target_source.connect(buffer_input)
       buffer_output.connect(target_sink)
+      return buffer
     end
 
     def get_candidates circuit

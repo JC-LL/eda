@@ -22,6 +22,10 @@ module InfoDisplay
     puts "hit_a_key"
     $stdin.gets
   end
+
+  def ljust_dots lhs_txt,rhs_txt
+    lhs_txt.ljust(DOTS,'.')+" "+rhs_txt
+  end
 end
 
 if $PROGRAM_NAME==__FILE__
