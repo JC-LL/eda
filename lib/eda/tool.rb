@@ -38,10 +38,11 @@ module EDA
       analyzer.report_stats(circuit)
     end
 
-    def gen_dot circuit
+    def gen_dot circuit,filename=nil
       info 0,"printing circuit #{circuit.name}"
-      dot_name=CircuitPrinter.new.print_dot(circuit)
-      info 1,"filename".ljust(DOTS,'.')+" "+dot_name
+      dot_name=CircuitPrinter.new.print_dot(circuit,filename)
+      filename||=dot_name
+      info 1,"filename".ljust(DOTS,'.')+" "+filename
     end
 
     def gen_vhdl circuit
@@ -62,6 +63,12 @@ module EDA
       info 0,"STA static timing analysis (min,max)"
       analyzer=MinMaxAnalyzer.new
       analyzer.analyze circuit
+    end
+
+    def insert_buffer_random circuit
+      info 0,"insert buffer random"
+      inserter=BufferInserter.new
+      inserter.random_insert(circuit)
     end
   end
 end

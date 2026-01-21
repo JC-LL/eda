@@ -102,10 +102,10 @@ module EDA
       else
         op=OPS.sample
         if is_unary?(op)
-          return Unary.new(op,get_expr(depth-1))
+          return Unary.new(op,get_expr(depth))
         else
-          lhs=get_expr(depth-1)
-          rhs=get_expr(depth-1)
+          lhs=get_expr(depth)
+          rhs=get_expr(depth)
           return Binary.new(op,lhs,rhs)
         end
       end
@@ -152,6 +152,5 @@ module EDA
       info 3,str.to_s[0..max_str_length-1]+dots
     end
   end
-
 
 end

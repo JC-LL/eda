@@ -5,10 +5,12 @@ module EDA
 
     def analyze circuit
       @comp_delay={}
+      # assign random integer intrinsic delays to components if not provided.
       circuit.components.each do |comp|
-        @comp_delay[comp]=1+rand(10)
+        comp.infos[:delay]||=1+rand(10)
       end
       @min_max={}
+      # starts with time min max times [0;0]
       circuit.inputs.each do |input|
         @min_max[input]=[0,0]
         propagate(input)
@@ -33,7 +35,7 @@ module EDA
         min_max_ary=comp.inputs.collect{|input| @min_max[input]}
         min=min_max_ary.map{|ary| ary.min}.min
         max=min_max_ary.map{|ary| ary.max}.max
-        delay=@comp_delay[comp]
+        delay=comp.infos[:delay]
         min_max=[min+delay,max+delay]
         comp.outputs.each do |output|
           @min_max[output]=min_max

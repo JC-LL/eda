@@ -1,7 +1,5 @@
 module EDA
 
-
-
   class Port
     include InfoDisplay
     @@id=-1
@@ -37,16 +35,17 @@ module EDA
 
   class Circuit
     @@id=-1
-    attr_accessor :name
-    attr_accessor :inputs,:outputs,:components
-    attr_accessor :delay
-    attr_accessor :component
     attr_accessor :id
+    attr_accessor :name,:inputs,:outputs,:components
+    attr_accessor :component
+    attr_accessor :infos # misc infos
+
     def initialize name=nil
       @name=name || "#{self.class}_#{@@id+=1}"
       @id=(@@id+=1)
       @inputs,@outputs=[],[]
       @components=[]
+      @infos={}
     end
 
     def <<(e)
